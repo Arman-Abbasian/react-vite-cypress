@@ -1,4 +1,5 @@
 import './App.css'
+import AddPost from './components/Post/AddPost'
 
 function App() {
 
@@ -6,6 +7,7 @@ function App() {
 
       <div>
        <h1>cypress test</h1>
+       <AddPost />
     </div>
   )
 }
