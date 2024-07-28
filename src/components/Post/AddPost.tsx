@@ -1,10 +1,11 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useState } from "react"
 
 type FormDataType={
     title:string,
     body:string
 }
+
 type FormResType={
     id:number,
     title:string,
@@ -19,11 +20,19 @@ function AddPost() {
     };
     const submitHandler=(e:React.MouseEvent<HTMLFormElement, MouseEvent>)=>{
         e.preventDefault();
-        axios.post("http://localhost:4000/posts",formData).then(({data}:FormResType)=>{
-            setFormData({title:"",body:""})
-        }).catch(err=>{
-            console.log(err)
+        axios.post("http://localhost:4000/posts", formData)
+        .then((response: AxiosResponse<FormResType>) => {
+            const { data } = response; 
+            console.log(data)
+            setFormData({ title: "", body: "" });
         })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            } else {
+                console.log("Network error:"+ error.message);
+            }
+        });
     }
   return (
     <form onClick={submitHandler}>
