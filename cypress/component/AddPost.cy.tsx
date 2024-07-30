@@ -9,5 +9,4 @@ describe('<AddPost />', () => {
     cy.get('#title').should('exist');
     cy.get('#body').should('exist');
   });
-  
 });

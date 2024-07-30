@@ -6,8 +6,8 @@ type FormDataType={
     body:string
 }
 
-type FormResType={
-    id:number,
+export type FormResType={
+    id:string,
     title:string,
     body:string
 }
@@ -35,7 +35,7 @@ function AddPost() {
         });
     }
   return (
-    <form onClick={submitHandler}>
+    <form onSubmit={submitHandler}>
         <div>
             <label htmlFor="title">title</label>
             <input type="text" id="title" value={formData.title} name="title" onChange={formDataHandler} />
