@@ -1,16 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react"
+import { FormResType } from "../../CommonTypes";
 
 type FormDataType={
     title:string,
     body:string
 }
 
-export type FormResType={
-    id:string,
-    title:string,
-    body:string
-}
 
 function AddPost() {
     const [formData,setFormData]=useState<FormDataType>({title:"",body:""});

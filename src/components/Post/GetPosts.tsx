@@ -1,18 +1,25 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { FormResType } from "./AddPost"
+import { FormResType } from "../../CommonTypes"
+
 
 
 function GetPosts() {
-    const [posts,setPosts]=useState<FormResType>([])
+    const [posts,setPosts]=useState<FormResType[]>([])
     useEffect(()=>{
         axios.get("http://localhost:4000/posts").then(res=>{
         setPosts(res.data)
         }).catch((err)=>console.log(err))
     },[])
   return (
-    <div>GetPosts</div>
+    <div>
+      <h1>posts</h1>
+      <ul>
+        {posts.map((item)=>{
+          return <li key={item.id}>{item.title}</li>
+        })}
+      </ul>
+    </div>
   )
 }
-
 export default GetPosts
