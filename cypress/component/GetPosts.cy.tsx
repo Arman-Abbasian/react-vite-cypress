@@ -17,17 +17,17 @@ describe('GetPosts component', () => {
       cy.mount(<GetPosts />);
     });
   
-    // it('renders correctly', () => {
-    //   // Verify the rendered content
-    //   cy.contains('h1', 'posts').should('be.visible');
-    //   cy.get('li').should('have.length.greaterThan', 0);
-    // });
+    it('post title visible', () => {
+      cy.contains('h1', 'posts').should('be.visible');
+    });
+    it('list items test',()=>{
+      cy.get('li').should('have.length.greaterThan', 0);
+      cy.get('li').should('have.length', 3);
+    });
   
-    // it('displays post titles', () => {
-    //   // Assuming your fixture has 3 posts
-    //   cy.get('li').should('have.length', 3);
-    //   cy.contains('title 1').should('be.visible');
-    //   cy.contains('title 3').should('be.visible');
-    //   cy.contains('title 4').should('be.visible');
-    // });
+    it('displays post titles', () => {
+      cy.contains('title 1').should('be.visible');
+      cy.contains('title 3').should('be.visible');
+      cy.contains('title 4').should('be.visible');
+    });
   });
