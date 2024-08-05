@@ -8,6 +8,7 @@ function GetPosts() {
     const [posts,setPosts]=useState<FormResType[]>([])
     useEffect(()=>{
         axios.get("http://localhost:4000/posts").then(res=>{
+          console.log(res)
         setPosts(res.data)
         }).catch((err)=>console.log(err))
     },[])
