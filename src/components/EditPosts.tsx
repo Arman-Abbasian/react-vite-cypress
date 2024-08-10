@@ -5,16 +5,15 @@ import { FormResType } from "../CommonTypes";
 type EditPostProps={
   id:string,
   posts:FormResType[],
-  onClick:(e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 function EditPosts(props:EditPostProps) {
-  const {id,posts,onClick}=props;
+  const {id,posts}=props;
   const [formData,setFormData]=useState<FormResType>({} as FormResType);
   useEffect(()=>{
     const selectedPost = posts.find((post: FormResType) => post.id === id);
-    
-  },[onClick]);
+    setFormData(selectedPost as FormResType)
+  },[id]);
 
   const formDataHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setFormData({...formData,[e.target.name]:e.target.value})
