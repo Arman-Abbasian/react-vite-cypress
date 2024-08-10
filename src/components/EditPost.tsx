@@ -7,7 +7,7 @@ type EditPostProps={
   posts:FormResType[],
 };
 
-function EditPosts(props:EditPostProps) {
+function EditPost(props:EditPostProps) {
   const {id,posts}=props;
   const [formData,setFormData]=useState<FormResType>({} as FormResType);
   useEffect(()=>{
@@ -34,19 +34,20 @@ function EditPosts(props:EditPostProps) {
             }
         });
     }
+    if(!id) return
   return (
     <form onSubmit={submitHandler}>
         <div>
             <label htmlFor="title">title</label>
-            <input type="text" id="title" value={formData.title} name="title" onChange={formDataHandler}  />
+            <input type="text" id="title" value={formData?.title} name="title" onChange={formDataHandler}  />
         </div>
         <div>
             <label htmlFor="body">body</label>
-            <input type="text" id="body" value={formData.body} name="body" onChange={formDataHandler} />
+            <input type="text" id="body" value={formData?.body} name="body" onChange={formDataHandler} />
         </div>
         <input type="submit" value="Add" />
     </form>
   )
 }
 
-export default EditPosts
+export default EditPost;

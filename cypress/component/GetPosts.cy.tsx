@@ -1,5 +1,21 @@
 import GetPosts from '../../src/components/Post/GetPosts';
 
+const posts=[
+  {
+  id: "9c64",
+  title: "title 1",
+  body: "body 1"
+},
+{
+  id: "ada7",
+  title: "title 3",
+  body: "body 2"
+},
+{
+  id: "0121",
+  title: "title 4",
+  body: "body 4"
+},]
 describe('GetPosts component', () => {
   it('renders correctly', () => {
     cy.mount(<GetPosts />);
