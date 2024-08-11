@@ -1,6 +1,7 @@
+import { FormResType } from '../../src/CommonTypes';
 import GetPosts from '../../src/components/Post/GetPosts';
 
-const posts=[
+const posts:FormResType[]=[
   {
   id: "9c64",
   title: "title 1",
@@ -18,7 +19,7 @@ const posts=[
 },]
 describe('GetPosts component', () => {
   it('renders correctly', () => {
-    cy.mount(<GetPosts />);
+    cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
     // Add assertions to verify the rendered content
     cy.contains('h1', 'posts').should('be.visible');
     cy.get('li').should('have.length.greaterThan', 0);
@@ -30,7 +31,7 @@ describe('GetPosts component', () => {
     beforeEach(() => {
       // Mock the API call
       cy.intercept('GET', 'http://localhost:4000/posts', { fixture: 'posts.json' });
-      cy.mount(<GetPosts />);
+      cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
     });
   
     it('post title visible', () => {
