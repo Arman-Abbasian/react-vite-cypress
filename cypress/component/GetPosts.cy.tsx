@@ -1,7 +1,8 @@
 import { FormResType } from '../../src/CommonTypes';
 import GetPosts from '../../src/components/Post/GetPosts';
 
-const posts:FormResType[]=[
+const posts:FormResType[]=
+[
   {
   id: "9c64",
   title: "title 1",
@@ -16,7 +17,9 @@ const posts:FormResType[]=[
   id: "0121",
   title: "title 4",
   body: "body 4"
-},]
+}
+];
+
 describe('GetPosts component', () => {
   it('renders correctly', () => {
     cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);

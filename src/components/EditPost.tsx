@@ -45,7 +45,7 @@ function EditPost(props:EditPostProps) {
             <label htmlFor="body">body</label>
             <input type="text" id="body" value={formData?.body} name="body" onChange={formDataHandler} />
         </div>
-        <input type="submit" value="Add" />
+        <input type="submit" className="submit" value="Add" />
     </form>
   )
 }
