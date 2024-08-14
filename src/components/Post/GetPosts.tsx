@@ -14,7 +14,7 @@ function GetPosts(props:GetPostsProps) {
         axios.get("http://localhost:4000/posts").then(res=>{
         setPosts(res.data)
         }).catch((err)=>console.log(err))
-    },[posts]);
+    },[]);
 
   return (
     <div>

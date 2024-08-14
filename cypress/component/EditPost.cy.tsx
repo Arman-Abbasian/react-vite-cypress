@@ -33,8 +33,8 @@ describe('<EditPost />', () => {
         }).as('putRequest');
       
         cy.mount(<EditPost id="1" posts={posts} />);
-        cy.get('#title').type('Updated Title');
-        cy.get('#body').type('Updated Body');
+        cy.get('#title').clear().type('Updated Title');
+        cy.get('#body').clear().type('Updated Body');
         cy.get('form').submit();
       
         cy.wait('@putRequest').its('response.statusCode').should('eq', 200);
@@ -51,8 +51,8 @@ describe('<EditPost />', () => {
         }).as('putRequest');
       
         cy.mount(<EditPost id="1" posts={posts} />);
-        cy.get('#title').type('Updated Title');
-        cy.get('#body').type('Updated Body');
+        cy.get('#title').clear().type('Updated Title');
+        cy.get('#body').clear().type('Updated Body');
         cy.get('form').submit();
       
         cy.wait('@putRequest');

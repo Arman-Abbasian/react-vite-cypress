@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { FormResType } from "../CommonTypes";
+import toast from "react-hot-toast";
 
 type EditPostProps={
   id:string,
@@ -28,8 +29,10 @@ function EditPost(props:EditPostProps) {
         })
         .catch((error) => {
             if (error.response) {
-                console.log(error.response.data);
+              toast.error(error.message)
+                console.log(error.message);
             } else {
+              console.log({error})
                 console.log("Network error:"+ error.message);
             }
         });

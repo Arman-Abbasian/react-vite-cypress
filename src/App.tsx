@@ -4,6 +4,7 @@ import EditPost from './components/EditPost'
 import AddPost from './components/Post/AddPost'
 import GetPosts from './components/Post/GetPosts'
 import { FormResType } from './CommonTypes'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const [posts,setPosts]=useState<FormResType[]>([])
@@ -11,6 +12,7 @@ const [id,setId]=useState<string>("");
   return (
 
       <div>
+        <Toaster />
        <h1>cypress test</h1>
        <AddPost />
        <GetPosts posts={posts} setPosts={setPosts} setId={setId} />
