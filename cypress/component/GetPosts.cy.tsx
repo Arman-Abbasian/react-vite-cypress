@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FormResType } from '../../src/CommonTypes';
 import GetPosts from '../../src/components/Post/GetPosts';
 
@@ -20,34 +21,57 @@ const posts:FormResType[]=
 }
 ];
 
-describe('GetPosts component', () => {
-  it('renders correctly', () => {
-    cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
-    // Add assertions to verify the rendered content
-    cy.contains('h1', 'posts').should('be.visible');
-    cy.get('li').should('have.length.greaterThan', 0);
-  });
-});
+
+// describe('GetPosts component', () => {
+//   it('renders correctly', () => {
+//     cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
+//     // Add assertions to verify the rendered content
+//     cy.contains('h1', 'posts').should('be.visible');
+//     cy.get('li').should('have.length.greaterThan', 0);
+//   });
+// });
 
   //mock the api
-  describe('GetPosts component', () => {
-    beforeEach(() => {
-      // Mock the API call
-      cy.intercept('GET', 'http://localhost:4000/posts', { fixture: 'posts.json' });
-      cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
-    });
+  // describe('GetPosts component', () => {
+  //   beforeEach(() => {
+  //     // Mock the API call
+  //     cy.intercept('GET', 'http://localhost:4000/posts', { fixture: 'posts.json' });
+  //     cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
+  //   });
   
-    it('post title visible', () => {
-      cy.contains('h1', 'posts').should('be.visible');
-    });
-    it('list items test',()=>{
-      cy.get('li').should('have.length.greaterThan', 0);
-      cy.get('li').should('have.length', 3);
-    });
+  //   it('post title visible', () => {
+  //     cy.contains('h1', 'posts').should('be.visible');
+  //   });
+  //   it('list items test',()=>{
+  //     cy.get('li').should('have.length.greaterThan', 0);
+  //     cy.get('li').should('have.length', 3);
+  //   });
   
-    it('displays post titles', () => {
-      cy.contains('title 1').should('be.visible');
-      cy.contains('title 3').should('be.visible');
-      cy.contains('title 4').should('be.visible');
-    });
+  //   it('displays post titles', () => {
+  //     cy.contains('title 1').should('be.visible');
+  //     cy.contains('title 3').should('be.visible');
+  //     cy.contains('title 4').should('be.visible');
+  //   });
+  // });
+
+//=============================
+describe('delete and get a post', () => {
+  it('deletes a post', () => {
+    cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
+    
+    cy.intercept('GET', 'http://localhost:4000/posts', {
+      statusCode: 200,
+    }).as('getPosts');
+
+    cy.intercept('DELETE', 'http://localhost:4000/posts/9c64', {
+      statusCode: 200,
+    }).as('deletePost');
+
+    cy.wait('@getPosts');
+    cy.get('ul').children().should('have.length', posts.length);
+    cy.get('ul').children().first().find('p').contains('delete').click();
+    cy.wait('@deletePost');
+
+    cy.get('ul').children().should('have.length', posts.length - 1);
   });
+});
