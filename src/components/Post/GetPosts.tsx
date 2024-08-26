@@ -17,6 +17,7 @@ function GetPosts(props:GetPostsProps) {
     },[]);
 
 const deleteHandler=(id:string)=>{
+  console.log(id)
   axios.delete(`http://localhost:4000/posts/${id}`).then((res)=>{
     toast.success("post removed successfully");
     getPosts({setPosts})

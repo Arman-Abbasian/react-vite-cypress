@@ -1,77 +1,72 @@
-import { useState } from 'react';
-import { FormResType } from '../../src/CommonTypes';
+import { mount } from 'cypress/react';
 import GetPosts from '../../src/components/Post/GetPosts';
+import { FormResType } from '../../src/CommonTypes';
+import { useState } from 'react';
 
-const posts:FormResType[]=
-[
-  {
-  id: "9c64",
-  title: "title 1",
-  body: "body 1"
-},
-{
-  id: "ada7",
-  title: "title 3",
-  body: "body 2"
-},
-{
-  id: "0121",
-  title: "title 4",
-  body: "body 4"
-}
-];
+describe('GetPosts Component', () => {
+  let initialMockPosts: FormResType[] = [
+    { id: '1', title: 'First Post',body:'gfgggggggggggggggg' },
+    { id: '2', title: 'Second Post',body:'gfgggggggggggggggg' },
+    { id: '3', title: 'Third Post',body:'gfgggggggggggggggg' }
+  ];
 
+ // Variable to hold current posts, mutable across intercepts
 
-// describe('GetPosts component', () => {
-//   it('renders correctly', () => {
-//     cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
-//     // Add assertions to verify the rendered content
-//     cy.contains('h1', 'posts').should('be.visible');
-//     cy.get('li').should('have.length.greaterThan', 0);
-//   });
-// });
+ beforeEach(() => {
+   // Initialize mockPosts before each test
+  let mockPosts = [...initialMockPosts];
 
-  //mock the api
-  // describe('GetPosts component', () => {
-  //   beforeEach(() => {
-  //     // Mock the API call
-  //     cy.intercept('GET', 'http://localhost:4000/posts', { fixture: 'posts.json' });
-  //     cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
-  //   });
-  
-  //   it('post title visible', () => {
-  //     cy.contains('h1', 'posts').should('be.visible');
-  //   });
-  //   it('list items test',()=>{
-  //     cy.get('li').should('have.length.greaterThan', 0);
-  //     cy.get('li').should('have.length', 3);
-  //   });
-  
-  //   it('displays post titles', () => {
-  //     cy.contains('title 1').should('be.visible');
-  //     cy.contains('title 3').should('be.visible');
-  //     cy.contains('title 4').should('be.visible');
-  //   });
-  // });
+   // Intercept GET requests to fetch posts
+   cy.intercept('GET', 'http://localhost:4000/posts', (req) => {
+     req.reply({
+       statusCode: 200,
+       body: mockPosts,
+     });
+   }).as('getPosts');
 
-//=============================
-describe('delete and get a post', () => {
-  it('deletes a post', () => {
-    cy.mount(<GetPosts posts={posts} setId={cy.stub()} setPosts={cy.stub()} />);
-    
-    cy.intercept('GET', 'http://localhost:4000/posts', {
-      statusCode: 200,
-    }).as('getPosts');
+   // Intercept DELETE requests to delete a post
+   cy.intercept('DELETE', 'http://localhost:4000/posts/*', (req) => {
+     const idToDelete = req.url.split('/').pop();
+     // Update mockPosts by removing the deleted post
+      mockPosts = mockPosts.filter(post => post.id !== idToDelete);
+     req.reply({
+       statusCode: 200,
+       body: { message: 'Post deleted successfully' },
+     });
+   }).as('deletePost');
 
-    cy.intercept('DELETE', 'http://localhost:4000/posts/9c64', {
-      statusCode: 200,
-    }).as('deletePost');
+   // Create a wrapper component to manage state
+   const Wrapper = () => {
+     const [posts, setPosts] = useState<FormResType[]>([]);
+     const [id, setId] = useState<string>('');
 
-    cy.wait('@getPosts');
-    cy.get('ul').children().should('have.length', posts.length);
-    cy.get('ul').children().first().find('p').contains('delete').click();
-    cy.wait('@deletePost');
+     return <GetPosts posts={posts} setPosts={setPosts} setId={setId} />;
+   };
 
-    cy.get('ul').children().should('have.length', posts.length - 1);
+   // Mount the wrapper component
+   mount(<Wrapper />);
+ });
+
+ it('should delete a post successfully and update the UI', () => {
+   // Wait for the initial GET request to fetch posts
+   cy.wait('@getPosts');
+
+   // Verify that 3 posts are rendered
+   cy.get('ul > li').should('have.length', 3);
+
+   // Click the delete button of the first post
+   cy.get('ul > li').first().contains('delete').click();
+
+   // Wait for the DELETE request to complete
+   cy.wait('@deletePost');
+
+   // Verify that the success toast is displayed
+   //cy.contains('post removed successfully').should('be.visible');
+
+   // Wait for the GET request triggered by the deleteHandler to refetch posts
+   cy.wait('@getPosts');
+
+   // Verify that the number of posts is now 2
+   cy.get('ul > li').should('have.length', 2);
   });
 });
