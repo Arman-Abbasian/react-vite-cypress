@@ -8,13 +8,13 @@ import { Toaster } from 'react-hot-toast'
 
 function App() {
   const [posts,setPosts]=useState<FormResType[]>([])
-const [id,setId]=useState<string>("");
+  const [id,setId]=useState<string>("");
   return (
 
       <div>
         <Toaster />
        <h1>cypress test</h1>
-       <AddPost />
+       <AddPost setPosts={setPosts} />
        <GetPosts posts={posts} setPosts={setPosts} setId={setId} />
        <EditPost id={id} posts={posts} />
     </div>

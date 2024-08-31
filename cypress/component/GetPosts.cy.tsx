@@ -25,7 +25,7 @@ describe('GetPosts Component', () => {
    }).as('getPosts');
 
    // Intercept DELETE requests to delete a post
-   cy.intercept('DELETE', 'http://localhost:4000/posts/*', (req) => {
+   cy.intercept('DELETE', 'http://localhost:4000/posts/1', (req) => {
      const idToDelete = req.url.split('/').pop();
      // Update mockPosts by removing the deleted post
       mockPosts = mockPosts.filter(post => post.id !== idToDelete);
@@ -61,7 +61,7 @@ describe('GetPosts Component', () => {
    cy.wait('@deletePost');
 
    // Verify that the success toast is displayed
-   //cy.contains('post removed successfully').should('be.visible');
+   cy.contains('post removed successfully').should('be.visible');
 
    // Wait for the GET request triggered by the deleteHandler to refetch posts
    cy.wait('@getPosts');

@@ -1,14 +1,20 @@
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react"
 import { FormResType } from "../../CommonTypes";
+import { getPosts } from "../../utils/api";
 
 type FormDataType={
     title:string,
     body:string
 }
 
+type AddPostsProps={
+    setPosts:React.Dispatch<React.SetStateAction<FormResType[]>>
+  }
 
-function AddPost() {
+
+function AddPost(props:AddPostsProps) {
+    const {setPosts}=props
     const [formData,setFormData]=useState<FormDataType>({title:"",body:""});
 
     const formDataHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -19,7 +25,7 @@ function AddPost() {
         axios.post("http://localhost:4000/posts", formData)
         .then((response: AxiosResponse<FormResType>) => {
             const { data } = response; 
-            console.log(data)
+            getPosts({setPosts})
             setFormData({ title: "", body: "" });
         })
         .catch((error) => {
