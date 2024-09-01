@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { useState } from "react"
 import { FormResType } from "../../CommonTypes";
 import { getPosts } from "../../utils/api";
+import toast from "react-hot-toast";
 
 type FormDataType={
     title:string,
@@ -30,9 +31,9 @@ function AddPost(props:AddPostsProps) {
         })
         .catch((error) => {
             if (error.response) {
-                console.log(error.response.data);
+                toast.error(error.response.data);
             } else {
-                console.log("Network error:"+ error.message);
+                toast.error("Network error:"+ error.message);
             }
         });
     }

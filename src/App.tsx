@@ -10,7 +10,6 @@ function App() {
   const [posts,setPosts]=useState<FormResType[]>([])
   const [id,setId]=useState<string>("");
   return (
-
       <div>
         <Toaster />
        <h1>cypress test</h1>

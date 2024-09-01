@@ -1,6 +1,4 @@
 // cypress/component/App.cy.tsx
-
-import React from 'react';
 import { mount } from 'cypress/react';
 import App from '../../src/App';  // Adjust the path as needed
 import { FormResType } from '../../src/CommonTypes';
