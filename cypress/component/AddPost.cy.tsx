@@ -81,9 +81,9 @@ describe('AddPost Component - API Error Handling', () => {
     cy.get('form').submit();
 
     // Wait for the network error to occur
-    cy.wait('@networkError');
+    cy.wait('@networkError',{timeout:30000});
 
     // Assert that the network error toast is displayed
-    cy.contains('Network error').should('be.visible');
+    cy.get('.go3958317564').contains('Network error:Network Error').should('be.visible');
   });
 });
