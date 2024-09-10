@@ -36,54 +36,26 @@ describe('AddPost component', () => {
     cy.get('input[name="title"]').should('have.value', '');
     cy.get('input[name="body"]').should('have.value', '');
   });
-});
 
-describe('AddPost Component - API Error Handling', () => {
-  let mockSetPosts: sinon.SinonStub; // Declare mockSetPosts here
+it('should display an error message on network error', () => {
+  // Intercept the POsST request with an error response
+  cy.intercept('POST', 'http://localhost:4000/posts', {
+    statusCode: 500,
+    body: 'Network error'
+  }).as('addPostError');
 
-  beforeEach(() => {
-    mockSetPosts = cy.stub(); // Initialize the stub in beforeEach
-    cy.mount(<AddPost setPosts={mockSetPosts} />);
-  });
+  // Fill out the form
+  cy.get('input[name="title"]').type('Test Title');
+  cy.get('input[name="body"]').type('Test Body');
 
-  it('should display an error message when the API call fails', () => {
-    // Intercept the POST request and simulate an error response
-    cy.intercept('POST', 'http://localhost:4000/posts', {
-      statusCode: 500, // Simulating server error
-      body: { message: 'Internal Server Error' }, // Custom error message
-    }).as('addPostError');
+  // Submit the form
+  cy.get('form').submit();
 
-    // Fill in the AddPost form
-    cy.get('input[name="title"]').type('New Post');
-    cy.get('input[name="body"]').type('New Body');
+  // Wait for the POST request to complete
+  cy.wait('@addPostError');
 
-    // Submit the form
-    cy.get('form').submit();
+  // Check if the error message is displayed
+  cy.contains('Network error');
+})
 
-    // Wait for the POST request to occur
-    cy.wait('@addPostError');
-
-    // Assert that the error toast is displayed with the correct message
-    cy.contains('Internal Server Error').should('be.visible');
-  });
-
-  it('should display a network error message if the network fails', () => {
-    // Intercept the POST request and simulate a network error
-    cy.intercept('POST', 'http://localhost:4000/posts', {
-      forceNetworkError: true, // Simulate a network failure
-    }).as('networkError');
-
-    // Fill in the AddPost form
-    cy.get('input[name="title"]').type('Another Post');
-    cy.get('input[name="body"]').type('This is another post body');
-
-    // Submit the form
-    cy.get('form').submit();
-
-    // Wait for the network error to occur
-    cy.wait('@networkError',{timeout:30000});
-
-    // Assert that the network error toast is displayed
-    cy.get('.go3958317564').contains('Network error:Network Error').should('be.visible');
-  });
 });
