@@ -55,7 +55,7 @@ it('should display an error message on network error', () => {
   cy.wait('@addPostError');
 
   // Check if the error message is displayed
-  cy.contains('Network error',{ timeout: 10000 });
+  cy.contains('Network error');
 })
 
 });
