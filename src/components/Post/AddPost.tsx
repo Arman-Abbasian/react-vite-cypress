@@ -11,7 +11,7 @@ type FormDataType={
 
 type AddPostsProps={
     setPosts:React.Dispatch<React.SetStateAction<FormResType[]>>
-  }
+}
 
 
 function AddPost(props:AddPostsProps) {
@@ -36,8 +36,9 @@ function AddPost(props:AddPostsProps) {
                 toast.error("Network error:"+ error.message);
             }
         });
-    }
-  return (
+};
+
+return (
     <form onSubmit={submitHandler}>
         <div>
             <label htmlFor="title">title</label>

@@ -6,7 +6,7 @@ export default defineConfig({
       framework: "react",
       bundler: "vite",
     },
-    defaultCommandTimeout:10000,
+    defaultCommandTimeout:4000,
   },
 
   e2e: {

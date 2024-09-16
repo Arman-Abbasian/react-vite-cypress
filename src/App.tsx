@@ -34,3 +34,36 @@ export default App
       <div role="status" aria-live="polite" class="go3958317564">Network error:Network Error</div>
   </div>
 </div> */}
+
+//Frontend
+// {
+//   "id": 147953,
+//   "productsName": "پیتزا سیر و استیک",
+//   "productsUnitName": "عدد",
+//   "productsUnitRef": 11,
+//   "count": 1,
+//   "price": 50000,
+//   "discountPrice": 0,
+//   "discountPercent": 0,
+//   "tax": null
+// },
+
+
+// //Backend
+// {
+//   "id": 14421,
+//   "productsName": "\u0633\u0627\u0646\u062F\u0648\u06CC\u0686 \u0645\u06A9\u0632\u06CC\u06A9\u0646 2",
+//   "productUnitName": "\u0639\u062F\u062F",
+//   "productUnitRef": 11,
+//   "count": 1.00,
+//   "price": 1300000.00,
+//   "productsRef": 147948,
+//   "discount": 0.00,
+//   "tax": 0.00,
+
+ 
+
+  
+//   "barcode": "111228",
+//   "shopOrderRef": 11927,
+// }
