@@ -12,7 +12,7 @@ function App() {
   return (
       <div>
         <Toaster />
-       <h1>cypress test</h1>
+       <h1 data-testid='appTitle'>cypress test</h1>
        <AddPost setPosts={setPosts} />
        <GetPosts posts={posts} setPosts={setPosts} setId={setId} />
        <EditPost id={id} posts={posts} />
