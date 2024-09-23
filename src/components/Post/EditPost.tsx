@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
-import { FormResType } from "../CommonTypes";
 import toast from "react-hot-toast";
+import { FormResType } from "../../CommonTypes";
 
 type EditPostProps={
   id:string,

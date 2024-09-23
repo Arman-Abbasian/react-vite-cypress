@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useState } from "react"
 import { FormResType } from "../../CommonTypes";
 import { getPosts } from "../../utils/api";
@@ -24,8 +24,7 @@ function AddPost(props:AddPostsProps) {
     const submitHandler=(e:React.MouseEvent<HTMLFormElement, MouseEvent>)=>{
         e.preventDefault();
         axios.post("http://localhost:4000/posts", formData)
-        .then((response: AxiosResponse<FormResType>) => {
-            const { data } = response; 
+        .then(() => {
             getPosts({setPosts})
             setFormData({ title: "", body: "" });
         })

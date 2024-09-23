@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import EditPost from './components/EditPost'
+import EditPost from './components/Post/EditPost'
 import AddPost from './components/Post/AddPost'
 import GetPosts from './components/Post/GetPosts'
 import { FormResType } from './CommonTypes'
