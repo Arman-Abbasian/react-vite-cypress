@@ -17,7 +17,6 @@ function GetPosts(props:GetPostsProps) {
     },[]);
 
 const deleteHandler=(id:string)=>{
-  console.log(id)
   axios.delete(`http://localhost:4000/posts/${id}`).then(()=>{
     toast.success("post removed successfully");
     getPosts({setPosts})
@@ -29,9 +28,9 @@ const deleteHandler=(id:string)=>{
       <h1>posts</h1>
       <ul>
         {posts.map((item,index)=>{
-          return <li onClick={()=>setId(item.id)} key={item.id}>
-            <p data-testid={index}>{item.title}</p>
-            <p onClick={()=>deleteHandler(item.id)}>delete</p>
+          return <li  key={item.id}>
+            <p onClick={()=>setId(item.id)} data-testid={index}>{item.title}</p>
+            <p id={`deleteButton-${item.id}`} onClick={()=>deleteHandler(item.id)}>delete</p>
           </li>
         })}
       </ul>

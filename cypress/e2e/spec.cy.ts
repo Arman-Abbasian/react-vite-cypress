@@ -45,4 +45,32 @@ describe('Post Management End-to-End Test', () => {
     // Check that the new post is displayed
     cy.contains('title 4').should('be.visible');
   });
+
+  it('should allow the user to delete a post', () => {
+    // Intercept the DELETE request when a post is deleted
+    cy.intercept('DELETE', 'http://localhost:4000/posts/1', {
+      statusCode: 200
+    }).as('deletePost');
+
+    // Mock the updated GET request after deleting a post
+    cy.intercept('GET', 'http://localhost:4000/posts', {
+      statusCode: 200,
+      body: [
+        { id: '2', title: 'Second Mock Post', body: 'This is the body of the second mock post.' }
+      ],
+    }).as('updatedPostsAfterDelete');
+
+    // Click the delete button for the first post
+    cy.get('#deleteButton-1').click();
+
+    // Wait for the DELETE request to complete
+    cy.wait('@deletePost');
+
+    // Wait for the updated GET request after deleting the post
+    cy.wait('@updatedPostsAfterDelete');
+
+    // Verify the post is no longer visible
+    cy.contains('First Mock Post').should('not.exist');
+  });
+
 });

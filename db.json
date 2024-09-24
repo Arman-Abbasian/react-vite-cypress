@@ -1,47 +1,12 @@
 {
   "posts": [
     {
-      "id": "6daf",
-      "title": "title 2",
-      "body": "bosy 2"
-    },
-    {
-      "id": "bef2",
-      "title": "title 1",
-      "body": "body 1"
-    },
-    {
       "id": "3648",
       "title": "title 4",
-      "body": "body 4"
+      "body": "body 5"
     },
     {
-      "id": "c9db",
-      "title": "title 4",
-      "body": "body 4"
-    },
-    {
-      "id": "da18",
-      "title": "title 4",
-      "body": "body 4"
-    },
-    {
-      "id": "aa77",
-      "title": "title 4",
-      "body": "body 4"
-    },
-    {
-      "id": "62e8",
-      "title": "title 4",
-      "body": "body 4"
-    },
-    {
-      "id": "38c3",
-      "title": "title 4",
-      "body": "body 4"
-    },
-    {
-      "id": "82e0",
+      "id": "c04f",
       "title": "title 4",
       "body": "body 4"
     }

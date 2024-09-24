@@ -6,10 +6,11 @@ import { FormResType } from "../../CommonTypes";
 type EditPostProps={
   id:string,
   posts:FormResType[],
+  setId:React.Dispatch<React.SetStateAction<string>>
 };
 
 function EditPost(props:EditPostProps) {
-  const {id,posts}=props;
+  const {id,posts,setId}=props;
   const [formData,setFormData]=useState<FormResType>({} as FormResType);
   useEffect(()=>{
     const selectedPost = posts.find((post: FormResType) => post.id === id);
@@ -22,10 +23,10 @@ function EditPost(props:EditPostProps) {
     const submitHandler=(e:React.MouseEvent<HTMLFormElement, MouseEvent>)=>{
         e.preventDefault();
         axios.put(`http://localhost:4000/posts/${id}`, formData)
-        .then((response: AxiosResponse<FormResType>) => {
-            const { data } = response; 
-            console.log(data)
+        .then(() => {
+            toast.success("data edited successfully");
             setFormData({...formData, title: "", body: "" });
+            setId('')
         })
         .catch((error) => {
             if (error.response) {
