@@ -1,6 +1,7 @@
 describe('Post Management End-to-End Test', () => {
   
   beforeEach(() => {
+    Cypress.config('defaultCommandTimeout', 1000);
     // Mock the initial GET request for fetching posts
     cy.intercept('GET', 'http://localhost:4000/posts', {
       statusCode: 200,
@@ -17,11 +18,14 @@ describe('Post Management End-to-End Test', () => {
   
   it('should allow the user to add a new post', () => {
     // Fill in the form to add a new post
-    cy.get('input[name="title"]').type('title 4');
-    cy.get('input[name="body"]').type('body 4');
+    cy.get('input[name="title"]').type('title added');
+    cy.get('input[name="body"]').type('body added');
   
-    // Intercept the POST request when the form is submitted
-    cy.intercept('POST', 'http://localhost:4000/posts').as('addPost');
+    // Intercept the POST request and mock the response
+    cy.intercept('POST', 'http://localhost:4000/posts', {
+      statusCode: 201, // Mock successful post creation
+      body: { id: '3', title: 'title added', body: 'body added' } // Mock new post response
+    }).as('addPost');
   
     // Intercept the GET request that follows to fetch updated posts
     cy.intercept('GET', 'http://localhost:4000/posts', {
@@ -29,22 +33,23 @@ describe('Post Management End-to-End Test', () => {
       body: [
         { id: '1', title: 'First Mock Post', body: 'This is the body of the first mock post.' },
         { id: '2', title: 'Second Mock Post', body: 'This is the body of the second mock post.' },
-        { id: '3', title: 'title 4', body: 'body 4' } // Newly added post
+        { id: '3', title: 'title added', body: 'body added' } // Newly added post in mock data
       ],
     }).as('updatedPosts');
   
     // Submit the form
     cy.get('input[type="submit"]').click();
   
-    // Wait for the POST request to be completed
+    // Wait for the POST request to be completed (this is now mocked)
     cy.wait('@addPost');
   
     // Wait for the updated GET request after adding the post
     cy.wait('@updatedPosts');
   
     // Check that the new post is displayed
-    cy.contains('title 4').should('be.visible');
+    cy.contains('title added').should('be.visible');
   });
+  
 
   it('should allow the user to delete a post', () => {
     // Intercept the DELETE request when a post is deleted
