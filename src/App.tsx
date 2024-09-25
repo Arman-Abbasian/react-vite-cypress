@@ -15,7 +15,7 @@ function App() {
         <h1 data-testid='appTitle'>cypress test</h1>
         <AddPost setPosts={setPosts} />
         <GetPosts posts={posts} setPosts={setPosts} setId={setId} />
-        <EditPost id={id} posts={posts} setId={setId} />
+        <EditPost id={id} posts={posts} setId={setId} setPosts={setPosts} />
     </div>
   )
 }

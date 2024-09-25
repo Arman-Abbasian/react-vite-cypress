@@ -27,9 +27,9 @@ const deleteHandler=(id:string)=>{
     <div>
       <h1>posts</h1>
       <ul>
-        {posts.map((item,index)=>{
+        {posts.map((item)=>{
           return <li  key={item.id}>
-            <p onClick={()=>setId(item.id)} data-testid={index}>{item.title}</p>
+            <p onClick={()=>setId(item.id)} data-testid={item.id}>{item.title}</p>
             <p id={`deleteButton-${item.id}`} onClick={()=>deleteHandler(item.id)}>delete</p>
           </li>
         })}

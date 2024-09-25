@@ -73,4 +73,41 @@ describe('Post Management End-to-End Test', () => {
     cy.contains('First Mock Post').should('not.exist');
   });
 
+  it('should allow the user to edit a post', () => {
+    // Intercept the PUT request when a post is edited
+    cy.intercept('PUT', 'http://localhost:4000/posts/1', {
+      statusCode: 200,
+      body: { id: '1', title: 'First Mock Post (Edited)', body: 'This is the edited body of the first mock post.' }
+    }).as('editPost');
+
+    // Mock the updated GET request after editing the post
+    cy.intercept('GET', 'http://localhost:4000/posts', {
+      statusCode: 200,
+      body: [
+        { id: '1', title: 'First Mock Post (Edited)', body: 'This is the edited body of the first mock post. (Edited)'},
+        { id: '2', title: 'Second Mock Post', body: 'This is the body of the second mock post.'}
+      ],
+    }).as('getPostsAfterEdit');
+
+    // Trigger the edit action (for example, if editing opens a modal or a form)
+    // Replace this with the actual interaction that triggers editing
+    cy.get('[data-testid="1"]').click(); // Assuming there's an edit button for post 1
+
+    // Fill in the new title and body for the post
+    cy.get('[data-testid="titleInputEdit"]').clear().type('First Mock Post (Edited)');
+    cy.get('[data-testid="titleInputPost"]').clear().type('This is the edited body of the first mock post. (Edited)');
+
+    // Submit the edit form
+    cy.get('[data-testid="submitInputEdit"]').click();
+
+    // Wait for the PUT request to be completed
+    cy.wait('@editPost');
+
+    // Wait for the updated GET request after editing the post
+    cy.wait('@getPostsAfterEdit',{ timeout: 10000 });
+
+    // Verify the post was edited
+    cy.contains('First Mock Post (Edited)').should('be.visible');
+  });
+
 });
