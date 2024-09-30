@@ -14,7 +14,7 @@ function App() {
   const { state, dispatch } = useTheme(); 
   
   return (
-      <div style={{backgroundColor:state.theme==='light'?"white":"black",color:state.theme==='light'?"black":"white",width:"100vw",height:"100vh"}}>
+      <div data-testid="appContainer" style={{backgroundColor:state.theme==='light'?"white":"black",color:state.theme==='light'?"black":"white",width:"100vw",height:"100vh"}}>
         <Toaster />
         <div style={{position:"fixed",right:"10px",top:"10px"}}>
           {state.theme==="dark"?

@@ -17,10 +17,10 @@ describe('Post Management End-to-End Test', () => {
     // Wait for the initial posts to load
     cy.wait('@getPosts');
   });
-  //-------------------------------
+  //------------------------------- 
   it('should toggle the theme when the button is clicked', () => {
     // The default theme is 'light'
-   cy.get('body').should('have.css', 'background-color', 'rgba(255, 255, 255, 0)'); // white background
+   cy.get('[data-testid="appContainer"]').should('have.css', 'background-color', 'rgb(255, 255, 255)'); // white background
   
     // Click the theme toggle button (adjust selector as necessary)
     cy.get('svg').click(); // Assuming the theme toggle is an icon like CiLight or CiDark
