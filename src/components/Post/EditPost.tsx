@@ -50,7 +50,7 @@ function EditPost(props:EditPostProps) {
         </div>
         <div>
             <label htmlFor="body">body</label>
-            <input data-testid="titleInputPost" type="text" id="body" value={formData?.body} name="body" onChange={formDataHandler} />
+            <input data-testid="bodyInputEdit" type="text" id="body" value={formData?.body} name="body" onChange={formDataHandler} />
         </div>
         <input data-testid="submitInputEdit" type="submit" className="submit" value="edit" />
     </form>

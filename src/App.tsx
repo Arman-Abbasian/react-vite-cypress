@@ -17,7 +17,9 @@ function App() {
       <div style={{backgroundColor:state.theme==='light'?"white":"black",color:state.theme==='light'?"black":"white",width:"100vw",height:"100vh"}}>
         <Toaster />
         <div style={{position:"fixed",right:"10px",top:"10px"}}>
-          {state.theme==="light"?<CiLight onClick={()=>dispatch({type:'TOGGLE_THEME'})}/>:<CiDark onClick={()=>dispatch({type:'TOGGLE_THEME'})}/>}
+          {state.theme==="dark"?
+            <CiLight style={{color:"rgb(153,153,0)",fontSize:"40px"}} onClick={()=>dispatch({type:'TOGGLE_THEME'})} />:
+            <CiDark style={{color:"black",fontSize:"40px"}} onClick={()=>dispatch({type:'TOGGLE_THEME'})} />}
         </div>
         <h1 data-testid='appTitle'>cypress test</h1>
         <AddPost setPosts={setPosts} />

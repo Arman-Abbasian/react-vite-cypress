@@ -7,7 +7,7 @@ import { ThemeProvider } from './providers/ThemeProvider.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
-    <App />
+      <App />
     </ThemeProvider>
   </React.StrictMode>,
 )
