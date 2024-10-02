@@ -17,17 +17,60 @@ describe('Post Management End-to-End Test', () => {
     // Wait for the initial posts to load
     cy.wait('@getPosts');
   });
+  //Provider test
   //------------------------------- 
-  it('should toggle the theme when the button is clicked', () => {
-    // The default theme is 'light'
-   cy.get('[data-testid="appContainer"]').should('have.css', 'background-color', 'rgb(255, 255, 255)'); // white background
+  // it('should toggle the theme when the button is clicked', () => {
+  //   // The default theme is 'light'
+  //  cy.get('[data-testid="appContainer"]').should('have.css', 'background-color', 'rgb(255, 255, 255)'); // white background
   
-    // Click the theme toggle button (adjust selector as necessary)
-    cy.get('svg').click(); // Assuming the theme toggle is an icon like CiLight or CiDark
+  //   // Click the theme toggle button (adjust selector as necessary)
+  //   cy.get('svg').click(); // Assuming the theme toggle is an icon like CiLight or CiDark
   
-    // After clicking, the theme should change to 'dark'
-    cy.get('body').should('have.css', 'background-color', 'rgba(0, 0, 0, 0)'); // black background
+  //   // After clicking, the theme should change to 'dark'
+  //   cy.get('body').should('have.css', 'background-color', 'rgba(0, 0, 0, 0)'); // black background
+  // });
+  //-------------------------------
+
+  //redux test
+  //-------------------------------
+
+  it('should have light theme by default', () => {
+    cy.get('[data-testid="appContainer"]')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .and('have.css', 'color', 'rgb(0, 0, 0)');
   });
+
+  it('should switch to dark theme when toggle is clicked', () => {
+    cy.get('[data-testid="theme-toggle"]').click();
+
+    cy.get('[data-testid="appContainer"]')
+      .should('have.css', 'background-color', 'rgb(0, 0, 0)')
+      .and('have.css', 'color', 'rgb(255, 255, 255)');
+  });
+
+  it('should switch back to light theme when toggle is clicked twice', () => {
+    cy.get('[data-testid="theme-toggle"]').click().click();
+
+    cy.get('[data-testid="appContainer"]')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .and('have.css', 'color', 'rgb(0, 0, 0)');
+  });
+
+  it('should persist theme across sessions (if implemented)', () => {
+    // Assuming theme persistence (e.g., using localStorage)
+
+    cy.get('[data-testid="theme-toggle"]').click();
+
+    // Reload the page
+    cy.reload();
+
+    // Verify the theme is still dark
+    cy.get('[data-testid="appContainer"]')
+      .should('have.css', 'background-color', 'rgb(0, 0, 0)')
+      .and('have.css', 'color', 'rgb(255, 255, 255)');
+  });
+
+  
   //-------------------------------
 
   it('should allow the user to add a new post', () => {
