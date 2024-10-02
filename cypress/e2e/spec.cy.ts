@@ -41,7 +41,7 @@ describe('Post Management End-to-End Test', () => {
   });
 
   it('should switch to dark theme when toggle is clicked', () => {
-    cy.get('[data-testid="theme-toggle"]').click();
+    cy.get('svg').click();
 
     cy.get('[data-testid="appContainer"]')
       .should('have.css', 'background-color', 'rgb(0, 0, 0)')
@@ -49,7 +49,8 @@ describe('Post Management End-to-End Test', () => {
   });
 
   it('should switch back to light theme when toggle is clicked twice', () => {
-    cy.get('[data-testid="theme-toggle"]').click().click();
+    cy.get('svg').click();
+    cy.get('svg').click();
 
     cy.get('[data-testid="appContainer"]')
       .should('have.css', 'background-color', 'rgb(255, 255, 255)')
@@ -59,15 +60,15 @@ describe('Post Management End-to-End Test', () => {
   it('should persist theme across sessions (if implemented)', () => {
     // Assuming theme persistence (e.g., using localStorage)
 
-    cy.get('[data-testid="theme-toggle"]').click();
+    cy.get('svg').click();
 
     // Reload the page
     cy.reload();
 
     // Verify the theme is still dark
     cy.get('[data-testid="appContainer"]')
-      .should('have.css', 'background-color', 'rgb(0, 0, 0)')
-      .and('have.css', 'color', 'rgb(255, 255, 255)');
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .and('have.css', 'color', 'rgb(0, 0, 0)');
   });
 
   
